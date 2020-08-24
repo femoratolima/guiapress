@@ -1,0 +1,48 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<div class="container table-responsive">
+    <br>
+    <h2 class="text-center">Artigos</h2>
+    <a class="btn btn-dark float-right" href="/admin/articles/new">Criar novo artigo</a>
+    <br>
+    <br>
+    <table class="table table-bordered table-striped table-hover " style="text-align:center">
+        <caption>Lista de artigos</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+           <% articles.forEach(article => { %>
+            <tr>
+                <td><%= article.id %></td>
+                <td><%= article.title %></td>
+                <td><%= article.slug %></td>
+                <td><%= article.category.title %></td>
+                <td>
+                    <a href="/admin/articles/edit/<%= article.id %>" class="btn btn-secondary mr-1"><i class="fas fa-edit"></i></a>
+                    <form method="POST" action="/articles/delete" style="display: inline" onsubmit="deleteConfirmation(event, this)">
+                        <input type="hidden" name="id" value="<%= article.id %>">
+                            <button class="btn btn-dark mr-1"><i class="far fa-trash-alt"></i></button>
+                    </form>
+                </td>
+             </tr>
+           <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include ('../../partials/footer.ejs') %>
+<script>
+    function deleteConfirmation(event, form){
+        event.preventDefault();
+        var decision = confirm("Deseja realmente excluir esse artigo?");
+        if(decision){
+            form.submit();
+        }
+    }
+</script>

@@ -1,0 +1,47 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<div class="container table-responsive">
+    <br>
+    <h2 class="text-center">Usuários</h2>
+    <a class="btn btn-dark float-right" href="/admin/users/create">Criar novo usuário</a>
+    <br>
+    <br>
+    <table class="table table-bordered table-striped table-hover " style="text-align:center">
+        <caption>Lista de usuários</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <th><%= user.id %></th>
+                    <th><%= user.email %></th>
+                    <th>
+                        <a href="" class="btn btn-secondary mr-1"><i class="fas fa-edit"></i></a>
+
+                        <form method="POST" action="" style="display: inline" onsubmit="deleteConfirmation(event, this)">
+                            <input type="hidden" name="id" value="<%= user.id %>">
+                            <button class="btn btn-dark mr-1"><i class="far fa-trash-alt"></i></button>
+                        </form>
+
+                        
+                    </th>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include ('../../partials/footer.ejs') %>
+<script>
+    function deleteConfirmation(event, form){
+        event.preventDefault();
+        var decision = confirm("Deseja realmente excluir essa categoria?");
+        if(decision){
+            form.submit();
+        }
+    }
+</script>
